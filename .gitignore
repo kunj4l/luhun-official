@@ -1,0 +1,17 @@
+# Netlify build output
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.*
+
+# Import scratch files (from Shopify curl scripts)
+col-*.json
+
+# Editor
+.vscode/
+.idea/

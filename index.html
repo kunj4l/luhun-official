@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Luhun Official — premium sneakers, tees, and hoodies. Kids sizes through 14. Free shipping on $99+ orders."
+    />
+    <!-- AUTO = same-origin when served at /store, or localhost:4000 in dev. For Netlify set your backend URL. -->
+    <meta name="luhun-api" content="AUTO" />
+    <title>Luhun Official — Shoes, Tees &amp; Hoodies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="announcement" role="region" aria-label="Promotion">
+      <p id="announcement-text">Free shipping on $99+ orders</p>
+    </div>
+    <div class="crm-status crm-status--hidden" id="crm-status" role="status"></div>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <button
+          type="button"
+          class="menu-toggle"
+          id="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          <span class="sr-only">Menu</span>
+          <span class="menu-bar" aria-hidden="true"></span>
+          <span class="menu-bar" aria-hidden="true"></span>
+          <span class="menu-bar" aria-hidden="true"></span>
+        </button>
+
+        <a class="logo" href="#/" data-nav="home">Luhun Official</a>
+
+        <nav class="header-nav" aria-label="Main">
+          <a class="header-nav-link" href="#/" data-nav="home">Home</a>
+          <a class="header-nav-link" href="#/track">Track order</a>
+          <a
+            class="header-nav-link"
+            href="https://www.instagram.com/nep_barbershop/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+          <button type="button" class="icon-btn cart-btn" id="cart-open" aria-label="Open cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 6h15l-1.5 9h-12z" />
+              <circle cx="9" cy="20" r="1.5" fill="currentColor" />
+              <circle cx="18" cy="20" r="1.5" fill="currentColor" />
+              <path d="M6 6L5 3H2" />
+            </svg>
+            <span class="cart-count" id="cart-count" hidden>0</span>
+          </button>
+        </nav>
+      </div>
+
+      <nav class="mobile-nav" id="mobile-nav" hidden aria-label="Mobile">
+        <a href="#/" data-nav="home">Home</a>
+        <p class="mobile-nav-label">Shoes</p>
+        <ul id="shoes-menu-mobile" class="mobile-sub"></ul>
+        <p class="mobile-nav-label">Clothing</p>
+        <a href="#/track">Track order</a>
+        <a href="#/clothing/tees">T-Shirts</a>
+        <a href="#/clothing/hoodies">Hoodies</a>
+      </nav>
+    </header>
+
+    <aside class="cart-drawer" id="cart-drawer" aria-labelledby="cart-title" hidden>
+      <div class="cart-backdrop" id="cart-backdrop" tabindex="-1" aria-hidden="true"></div>
+      <div class="cart-drawer-panel" role="dialog" aria-modal="true">
+        <header class="cart-header">
+          <h2 id="cart-title">Your cart</h2>
+          <button type="button" class="icon-btn" id="cart-close" aria-label="Close cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </header>
+        <div class="cart-body" id="cart-body"></div>
+        <footer class="cart-footer" id="cart-footer" hidden>
+          <div class="cart-total-row">
+            <span>Estimated total</span>
+            <strong id="cart-total">$0.00</strong>
+          </div>
+          <p class="cart-note">Taxes &amp; shipping calculated at checkout</p>
+          <button type="button" class="btn btn-primary btn-block" id="checkout-btn">
+            Check out
+          </button>
+          <button type="button" class="btn btn-ghost btn-block" id="cart-continue">
+            Continue shopping
+          </button>
+        </footer>
+      </div>
+    </aside>
+
+    <main id="main">
+      <!-- Home -->
+      <div id="view-home" class="view" data-view="home">
+        <section class="store-hero" aria-label="Featured store photos">
+          <div class="store-slideshow" id="store-slideshow">
+            <div class="store-slide is-active" data-slide="0">
+              <img
+                src="assets/store-front.jpg"
+                srcset="https://luhun.store/cdn/shop/files/front.jpg?v=1760320037&amp;width=750 750w, https://luhun.store/cdn/shop/files/front.jpg?v=1760320037&amp;width=1500 1500w, https://luhun.store/cdn/shop/files/front.jpg?v=1760320037&amp;width=2000 2000w"
+                sizes="100vw"
+                alt="Luhun store — sneakers, apparel, and barber chairs with hexagonal ceiling lights"
+                width="2000"
+                height="1200"
+                fetchpriority="high"
+              />
+              <div class="store-slide-overlay">
+                <div class="store-slide-card">
+                  <h2>Shop Our Latest Collection</h2>
+                  <p class="store-slide-tagline">
+                    <em>Elevate Your Style with Diverse Range of Shoes &amp; Clothing!</em>
+                  </p>
+                  <a href="#/shoes/8" class="btn btn-primary">Shop Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="store-slide" data-slide="1">
+              <img
+                src="assets/store-interior.jpg"
+                srcset="https://luhun.store/cdn/shop/files/DSC08315-HDR.jpg?v=1760320181&amp;width=750 750w, https://luhun.store/cdn/shop/files/DSC08315-HDR.jpg?v=1760320181&amp;width=1500 1500w, https://luhun.store/cdn/shop/files/DSC08315-HDR.jpg?v=1760320181&amp;width=2000 2000w"
+                sizes="100vw"
+                alt="Luhun store interior — retail space with shoes, clothing, and barbershop area"
+                width="2000"
+                height="1200"
+                loading="lazy"
+              />
+              <div class="store-slide-overlay store-slide-overlay--center">
+                <div class="store-slide-card">
+                  <h2>Shop Our Merch</h2>
+                  <p class="store-slide-tagline">
+                    <em>Elevate Your Style, Elevate Your Confidence with Luhun</em>
+                  </p>
+                  <a href="#/clothing/tees" class="btn btn-primary">Shop Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="store-slideshow-ui wrap">
+            <div class="store-slideshow-controls">
+              <button
+                type="button"
+                class="store-nav-btn"
+                id="store-prev"
+                aria-label="Previous slide"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <span class="store-counter" id="store-counter" aria-live="polite">1 / 2</span>
+              <button
+                type="button"
+                class="store-nav-btn"
+                id="store-next"
+                aria-label="Next slide"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+            <div class="store-dots" role="tablist" aria-label="Choose slide">
+              <button type="button" class="store-dot is-active" data-goto="0" aria-selected="true" aria-label="Slide 1"></button>
+              <button type="button" class="store-dot" data-goto="1" aria-selected="false" aria-label="Slide 2"></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="categories">
+          <div class="wrap">
+            <header class="section-head">
+              <h2>Shop by category</h2>
+              <p>Find your fit — from little kicks to size 14.</p>
+            </header>
+            <div class="category-grid">
+              <a href="#/shoes" class="category-card category-card--shoes">
+                <h3>Shoes</h3>
+                <p>Kids size - size 14</p>
+                <span class="category-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="#/clothing/tees" class="category-card category-card--tees">
+                <h3>T-Shirts</h3>
+                <p>Statement pieces</p>
+                <span class="category-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="#/clothing/hoodies" class="category-card category-card--hoodies">
+                <h3>Hoodies</h3>
+                <p>Layer up in Luhun</p>
+                <span class="category-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="featured">
+          <div class="wrap">
+            <header class="section-head section-head--row">
+              <div>
+                <h2>Best sellers</h2>
+                <p>What&apos;s moving right now</p>
+              </div>
+              <a href="#/shoes/10" class="text-link">View all shoes →</a>
+            </header>
+            <div class="product-grid" id="featured-grid"></div>
+          </div>
+        </section>
+
+        <section class="insta" id="insta">
+          <div class="wrap">
+            <header class="section-head section-head--row insta-head">
+              <h2>Luhun On Insta</h2>
+              <a
+                href="https://www.instagram.com/nep_barbershop/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-link"
+                >Follow on Instagram →</a
+              >
+            </header>
+            <div class="insta-collage" aria-label="Luhun Instagram gallery">
+              <a class="insta-item" href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener">
+                <img src="assets/insta-1.png" alt="Luhun on Instagram" width="900" height="900" loading="lazy" />
+              </a>
+              <a class="insta-item" href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener">
+                <img src="assets/insta-2.png" alt="Luhun on Instagram" width="900" height="900" loading="lazy" />
+              </a>
+              <a class="insta-item" href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener">
+                <img src="assets/insta-3.png" alt="Luhun on Instagram" width="900" height="900" loading="lazy" />
+              </a>
+              <a class="insta-item" href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener">
+                <img src="assets/insta-4.png" alt="Luhun on Instagram" width="900" height="900" loading="lazy" />
+              </a>
+              <a class="insta-item" href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener">
+                <img src="assets/insta-5.png" alt="Luhun on Instagram" width="900" height="900" loading="lazy" />
+              </a>
+              <a class="insta-item" href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener">
+                <img src="assets/insta-6.png" alt="Luhun on Instagram" width="900" height="900" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="newsletter">
+          <div class="wrap newsletter-inner">
+            <h2>Stay in the loop</h2>
+            <p>New drops, restocks, and exclusive offers — first to know.</p>
+            <form class="newsletter-form" id="newsletter-form">
+              <input type="email" name="email" placeholder="Email address" required />
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <!-- Shoes — browse by size -->
+      <div id="view-shoes-sizes" class="view" data-view="shoes-sizes" hidden>
+        <div class="wrap shoes-sizes-header">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="#/">Home</a>
+            <span> / </span>
+            <span>Shoes</span>
+          </nav>
+          <nav class="shop-category-nav" aria-label="Shop categories"></nav>
+          <h1>Shoes</h1>
+          <p class="shoes-sizes-lede">Kids size - size 14</p>
+        </div>
+        <section class="size-strip size-strip--page">
+          <div class="wrap">
+            <h2 class="size-strip-title">Browse by shoe size</h2>
+            <div class="size-chips size-chips--page" id="size-chips-shoes"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Collection -->
+      <div id="view-collection" class="view" data-view="collection" hidden>
+        <div class="wrap collection-header">
+          <nav class="breadcrumbs" aria-label="Breadcrumb" id="breadcrumbs"></nav>
+          <nav class="shop-category-nav" aria-label="Shop categories"></nav>
+          <div id="collection-subnav" class="collection-subnav" hidden></div>
+          <h1 id="collection-title">Collection</h1>
+          <div class="collection-toolbar">
+            <div class="filters">
+              <label class="filter-label">
+                Availability
+                <select id="filter-availability">
+                  <option value="all">All</option>
+                  <option value="in-stock">In stock</option>
+                  <option value="sale">On sale</option>
+                </select>
+              </label>
+              <label class="filter-label">
+                Sort
+                <select id="filter-sort">
+                  <option value="featured">Featured</option>
+                  <option value="price-asc">Price: low to high</option>
+                  <option value="price-desc">Price: high to low</option>
+                  <option value="name">Name A–Z</option>
+                </select>
+              </label>
+            </div>
+            <p class="product-count" id="product-count"></p>
+          </div>
+        </div>
+        <div class="wrap">
+          <div class="product-grid" id="collection-grid"></div>
+          <p class="empty-state" id="empty-state" hidden>No products match your filters.</p>
+        </div>
+      </div>
+
+      <!-- Order tracking -->
+      <div id="view-track" class="view" data-view="track" hidden>
+        <div class="wrap track-page">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="#/">Home</a><span> / </span><span>Track order</span>
+          </nav>
+          <h1>Track your order</h1>
+          <p class="track-intro">Enter the order number from your confirmation and the email you used at checkout.</p>
+
+          <form class="track-form" id="track-form">
+            <div class="track-form-row">
+              <label class="field">
+                <span>Order number</span>
+                <input type="text" name="orderNumber" id="track-order-number" required placeholder="LUH-XXXXXXXX-XXXX" autocomplete="off" />
+              </label>
+              <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" id="track-email" required placeholder="you@example.com" autocomplete="email" />
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="track-submit">Track order</button>
+          </form>
+
+          <div id="track-error" class="track-error" hidden role="alert"></div>
+          <div id="track-result" class="track-result" hidden></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <p><strong>Luhun Official</strong> — sneakers, tees &amp; hoodies.</p>
+        </div>
+        <div class="footer-links">
+          <h3>Shop</h3>
+          <ul id="footer-shoes-links"></ul>
+        </div>
+        <div class="footer-links">
+          <h3>Clothing</h3>
+          <ul>
+            <li><a href="#/clothing/tees">T-Shirts</a></li>
+            <li><a href="#/clothing/hoodies">Hoodies</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h3>Info</h3>
+          <ul>
+            <li class="footer-address">
+              <details class="footer-address-picker">
+                <summary>
+                  <address>
+                    3373 Princeton Rd Suite 131<br />
+                    Hamilton, Ohio 45011
+                  </address>
+                  <span class="footer-address-hint">Tap for directions</span>
+                </summary>
+                <div class="footer-map-links" role="group" aria-label="Open in maps">
+                  <a
+                    href="https://maps.apple.com/?address=3373%20Princeton%20Rd%20Suite%20131,%20Hamilton,%20OH%2045011"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Apple Maps</a
+                  >
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&amp;query=3373+Princeton+Rd+Suite+131,+Hamilton,+OH+45011"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Google Maps</a
+                  >
+                </div>
+              </details>
+            </li>
+            <li><a href="#/track">Track order</a></li>
+            <li><a href="https://www.instagram.com/nep_barbershop/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://luhun.store/" target="_blank" rel="noopener">luhun.store</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap footer-bottom">
+        <p>© 2026 Luhun Official · Demo storefront</p>
+        <p class="payment-icons" aria-label="Payment methods">Amex · Apple Pay · Visa · Mastercard</p>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

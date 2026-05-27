@@ -1,0 +1,25 @@
+# Luhun Official — Netlify deployment
+# Docs: DEPLOY-NETLIFY.md
+
+[build]
+  command = "node scripts/netlify-prepare.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback (direct URLs without hash still load the store)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
