@@ -29,6 +29,11 @@ export function getApiBase() {
     return "http://localhost:4000/api";
   }
 
+  // Production fallback for the live Luhun Netlify site.
+  if (location.hostname === "luhun.netlify.app" || location.hostname.endsWith(".netlify.app")) {
+    return "https://luhun-backend-1.onrender.com/api";
+  }
+
   // Production static host — set meta or ?api=https://your-backend.com
   return "";
 }
