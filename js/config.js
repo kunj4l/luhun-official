@@ -1,4 +1,6 @@
 /** Backend CRM API base URL */
+const PRODUCTION_API = "https://luhun-backend-1.onrender.com/api";
+
 export function getApiBase() {
   const params = new URLSearchParams(location.search);
   const qApi = params.get("api");
@@ -13,12 +15,6 @@ export function getApiBase() {
     return base.endsWith("/api") ? base : `${base}/api`;
   }
 
-  const stored = localStorage.getItem("luhun_api_url");
-  if (stored) {
-    const base = stored.replace(/\/$/, "");
-    return base.endsWith("/api") ? base : `${base}/api`;
-  }
-
   // Served from backend at /store (same origin)
   if (location.pathname.startsWith("/store")) {
     return `${location.origin}/api`;
@@ -29,16 +25,28 @@ export function getApiBase() {
     return "http://localhost:4000/api";
   }
 
-  // Production fallback for the live Luhun Netlify site.
+  // Production Netlify — always use Render (ignore stale localStorage from old tests)
   if (location.hostname === "luhun.netlify.app" || location.hostname.endsWith(".netlify.app")) {
-    return "https://luhun-backend-1.onrender.com/api";
+    return PRODUCTION_API;
   }
 
-  // Production static host — set meta or ?api=https://your-backend.com
+  const stored = localStorage.getItem("luhun_api_url");
+  if (stored) {
+    const base = stored.replace(/\/$/, "");
+    return base.endsWith("/api") ? base : `${base}/api`;
+  }
+
   return "";
 }
 
 export function setApiBase(url) {
   const base = url.replace(/\/$/, "");
   localStorage.setItem("luhun_api_url", base.endsWith("/api") ? base : `${base}/api`);
+}
+
+export function clearStaleApiOverride() {
+  const stored = localStorage.getItem("luhun_api_url") || "";
+  if (/localhost|127\.0\.0\.1/i.test(stored)) {
+    localStorage.removeItem("luhun_api_url");
+  }
 }

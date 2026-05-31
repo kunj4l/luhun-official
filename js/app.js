@@ -10,8 +10,8 @@ import {
   getFeaturedProducts,
   CONTAIN_IMAGE_IDS,
 } from "./products.js";
-import { submitCheckout, trackOrder } from "./api.js";
-import { getApiBase } from "./config.js";
+import { submitCheckout, trackOrder, checkBackendHealth } from "./api.js";
+import { getApiBase, clearStaleApiOverride } from "./config.js";
 
 const CART_KEY = "luhun-cart";
 
@@ -795,26 +795,29 @@ function setCrmStatus(ok, message) {
 }
 
 async function boot() {
+  clearStaleApiOverride();
   const ann = $("#announcement-text");
   if (ann) ann.textContent = "Loading catalog…";
   setCrmStatus(true, "Connecting to CRM…");
 
   try {
+    const health = await checkBackendHealth();
     await loadProducts();
     const source = getCatalogSource();
+    const crmOnline = !!health || source === "crm";
     if (ann) {
       ann.textContent =
-        source === "crm"
+        crmOnline
           ? "Live inventory · synced with admin CRM"
           : "Free shipping on $99+ orders";
     }
-    if (source === "crm") {
+    if (crmOnline) {
       setCrmStatus(true, "✓ Connected to CRM — orders sync to admin");
       setTimeout(() => $("#crm-status")?.classList.add("crm-status--hidden"), 4000);
     } else {
       setCrmStatus(
         false,
-        'CRM offline — using local catalog. Open <a href="http://localhost:4000/store">localhost:4000/store</a> with backend running, or add <code>?api=YOUR_BACKEND_URL</code>'
+        'CRM offline — using local catalog. Backend: <a href="https://luhun-backend-1.onrender.com/admin" target="_blank" rel="noopener">luhun-backend-1.onrender.com/admin</a>'
       );
     }
     updateCartUI();

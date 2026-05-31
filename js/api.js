@@ -6,8 +6,24 @@ function apiUrl(path) {
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+async function fetchWithRetry(url, options = {}, attempts = 4) {
+  let lastError;
+  for (let i = 0; i < attempts; i += 1) {
+    try {
+      const res = await fetch(url, options);
+      return res;
+    } catch (err) {
+      lastError = err;
+      if (i < attempts - 1) {
+        await new Promise((r) => setTimeout(r, 1500 * (i + 1)));
+      }
+    }
+  }
+  throw lastError || new Error("Network request failed");
+}
+
 export async function fetchCatalog() {
-  const res = await fetch(apiUrl("/storefront/catalog"), {
+  const res = await fetchWithRetry(apiUrl("/storefront/catalog"), {
     headers: { Accept: "application/json" },
   });
   if (!res.ok) throw new Error(`Catalog request failed (${res.status})`);
@@ -53,7 +69,9 @@ export async function submitCheckout({ email, name, items, shippingAddress }) {
 
 export async function checkBackendHealth() {
   try {
-    const res = await fetch(apiUrl("/health"), { headers: { Accept: "application/json" } });
+    const res = await fetchWithRetry(apiUrl("/health"), {
+      headers: { Accept: "application/json" },
+    }, 3);
     if (!res.ok) return null;
     return res.json();
   } catch {
