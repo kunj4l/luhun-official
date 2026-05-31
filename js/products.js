@@ -53,12 +53,16 @@ export function getProductById(id) {
 export async function loadProducts() {
   try {
     const { products, source } = await fetchCatalog();
+    catalogSource = source || "crm";
     if (products.length) {
       PRODUCTS = products;
-      catalogSource = source;
       syncCartVariantIds();
       return PRODUCTS;
     }
+    // CRM online but empty — keep local display until catalog is imported
+    console.warn("[luhun] CRM catalog empty — using local JSON for display");
+    PRODUCTS = LOCAL_PRODUCTS;
+    return PRODUCTS;
   } catch (err) {
     console.warn("[luhun] CRM catalog unavailable, using local JSON:", err.message);
   }

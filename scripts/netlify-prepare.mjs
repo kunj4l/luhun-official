@@ -12,7 +12,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const dist = path.join(root, "dist");
 
-const apiUrl = (process.env.LUHUN_API_URL || process.env.VITE_LUHUN_API_URL || "").trim();
+const apiUrl = (
+  process.env.LUHUN_API_URL
+  || process.env.VITE_LUHUN_API_URL
+  || "https://luhun-backend-1.onrender.com/api"
+).trim();
 
 const SKIP = new Set(["dist", "node_modules", ".git", "scripts/netlify-prepare.mjs"]);
 
@@ -47,6 +51,9 @@ function injectApiUrl(html) {
 
 if (fs.existsSync(dist)) fs.rmSync(dist, { recursive: true, force: true });
 copyDir(root, dist);
+
+const publicDir = path.join(root, "public");
+if (fs.existsSync(publicDir)) copyDir(publicDir, dist);
 
 const indexPath = path.join(dist, "index.html");
 let html = fs.readFileSync(indexPath, "utf8");
